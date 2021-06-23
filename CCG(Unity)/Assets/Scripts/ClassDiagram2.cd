@@ -1,0 +1,104 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="AttackedCard">
+    <Position X="1" Y="0.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAAAAAAA=</HashCode>
+      <FileName>Assets\Scripts\AttackedCard.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="AttackedHero">
+    <Position X="3" Y="0.75" Width="1.5" />
+    <NestedTypes>
+      <Enum Name="AttackedHero.HeroType" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>Assets\Scripts\AttackedHero.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Enum>
+    </NestedTypes>
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAIAAAAAAAAACAAAAAAQAQAQBAAAA=</HashCode>
+      <FileName>Assets\Scripts\AttackedHero.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="CardInfoScr">
+    <Position X="5" Y="0.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>gAAEAQAAAAIAgACAIAAAAIQAAICACAAAAAAAAyBIAAA=</HashCode>
+      <FileName>Assets\Scripts\CardInfoScr.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="CardMngr">
+    <Position X="8.75" Y="0.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Assets\Scripts\CardMangr.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="CardMangr">
+    <Position X="7" Y="0.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEA=</HashCode>
+      <FileName>Assets\Scripts\CardMangr.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="CardMovementScr">
+    <Position X="12.25" Y="0.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AACAAAEAAARAAIAAAEBAEAAAAAACACAAEBAAAABAAEA=</HashCode>
+      <FileName>Assets\Scripts\CardMovementScr.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="DropPlaceSrc">
+    <Position X="1" Y="3" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAAQAQAQAAAAA=</HashCode>
+      <FileName>Assets\Scripts\DropPlaceSrc.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="ForMenu">
+    <Position X="3" Y="4.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAAEAAAQAAA=</HashCode>
+      <FileName>Assets\Scripts\ForMenu.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Game">
+    <Position X="8.75" Y="2.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAEAAAAABAAAAAAIAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Assets\Scripts\GameManagerScr.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="GameManagerScr">
+    <Position X="10.5" Y="2.25" Width="1.5" />
+    <Compartments>
+      <Compartment Name="Fields" Collapsed="true" />
+      <Compartment Name="Properties" Collapsed="true" />
+      <Compartment Name="Methods" Collapsed="true" />
+    </Compartments>
+    <TypeIdentifier>
+      <HashCode>JQAIDV4CECABIQJMAAGCAJDgAQAAAzgBAgEYAAAIgAI=</HashCode>
+      <FileName>Assets\Scripts\GameManagerScr.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Struct Name="Card">
+    <Position X="7" Y="2.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AQAAAQAAAAoACAAAIAAAAAQAAIAAAAAAAAAAAgAAABA=</HashCode>
+      <FileName>Assets\Scripts\CardMangr.cs</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Enum Name="FieldType">
+    <Position X="1" Y="5.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAIABAAAAAAAABAAAAEA=</HashCode>
+      <FileName>Assets\Scripts\DropPlaceSrc.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>
