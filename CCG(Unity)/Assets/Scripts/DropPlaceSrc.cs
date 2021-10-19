@@ -20,22 +20,18 @@ public class DropPlaceSrc : MonoBehaviour, IDropHandler, IPointerEnterHandler, I
         if (Type != FieldType.SELF_FIELD)
             return;
 
-        CardMovementScr card = eventData.pointerDrag.GetComponent<CardMovementScr>();
+        CardControllerScr card = eventData.pointerDrag.GetComponent<CardControllerScr>();
 
-        if (card && card.GameManager.PlayerFieldCards.Count < 6 && 
-            card.GameManager.IsPlayerTurn  && card.GameManager.PlayerMana >=
-            card.GetComponent<CardInfoScr>().SelfCard.Manacost &&
-            !card.GetComponent<CardInfoScr>().SelfCard.IsPlaced) 
+        if (card && 
+            GameManagerScr.Instance.IsPlayerTurn  && 
+            GameManagerScr.Instance.PlayerMana >= card.Card.Manacost &&
+            !card.Card.IsPlaced) 
         {
-            card.GameManager.PlayerHandCards.Remove(card.GetComponent<CardInfoScr>());
-            card.GameManager.PlayerFieldCards.Add(card.GetComponent<CardInfoScr>());
-            card.DefaultParent = transform;
+            
+            card.Movement.DefaultParent = transform;
+            card.OnCast();
 
-            card.GetComponent<CardInfoScr>().SelfCard.IsPlaced = true;
-
-            card.GameManager.ReduceMana(true, card.GetComponent<CardInfoScr>().SelfCard.Manacost);
-
-            card.GameManager.CheckCardsForAvailability();
+           
         }
     }
 

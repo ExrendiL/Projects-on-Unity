@@ -29,6 +29,7 @@ public class Game
 
 public class GameManagerScr : MonoBehaviour
 {
+    public static GameManagerScr Instance; 
 
     public Game CurrentGame;
     public Transform EnemyHand, PlayerHand, PlayerField, EnemyField;
@@ -49,10 +50,10 @@ public class GameManagerScr : MonoBehaviour
 
     public AttackedHero EnemyHero,PlayerHero;
 
-    public List<CardInfoScr> PlayerHandCards = new List<CardInfoScr>(),
-                            PlayerFieldCards = new List<CardInfoScr>(),
-                            EnemyHandCards = new List<CardInfoScr>(),
-                            EnemyFieldCards = new List<CardInfoScr>();
+    public List<CardControllerScr> PlayerHandCards = new List<CardControllerScr>(),
+                            PlayerFieldCards = new List<CardControllerScr>(),
+                            EnemyHandCards = new List<CardControllerScr>(),
+                            EnemyFieldCards = new List<CardControllerScr>();
 
     public bool IsPlayerTurn
     {
@@ -62,6 +63,11 @@ public class GameManagerScr : MonoBehaviour
         }
     }
 
+    public void Awake()
+    {
+        if (Instance == null)
+            Instance = this;
+    }
     void Start()
     {
         StartGame();
@@ -120,25 +126,23 @@ public class GameManagerScr : MonoBehaviour
         if (deck.Count == 0)
             return;
 
-        Card card = deck[0];
-
-        GameObject cardGO = Instantiate(Cardprf, hand, false);
-
-        if (hand == EnemyHand)
-        {
-            cardGO.GetComponent<CardInfoScr>().HideCardInfo(card);
-            EnemyHandCards.Add(cardGO.GetComponent<CardInfoScr>());
-        }
-        else
-        {
-            cardGO.GetComponent<CardInfoScr>().ShowCardInfo(card, true);
-            PlayerHandCards.Add(cardGO.GetComponent<CardInfoScr>());
-            cardGO.GetComponent<AttackedCard>().enabled = false;
-        }
+        CreatCardPref(deck[0], hand);
+        
         deck.RemoveAt(0);
 
     }
 
+    void CreatCardPref(Card card, Transform hand)
+    {
+        GameObject cardGO = Instantiate(Cardprf, hand, false);
+        CardControllerScr cardC = cardGO.GetComponent<CardControllerScr>();
+        cardC.Init(card, hand == PlayerHand);
+        if (cardC.IsPlayerCard)
+            PlayerHandCards.Add(cardC);
+        else
+            EnemyHandCards.Add(cardC);
+    }        
+        
     IEnumerator TurnFunc()
     {
         TurnTime = 30;
@@ -146,9 +150,9 @@ public class GameManagerScr : MonoBehaviour
 
         foreach (var card in PlayerFieldCards)
 
-            card.DeHighlightCard();
+            card.Info.HighlightCard(false);
 
-        CheckCardsForAvailability();
+        CheckCardsForManaAvailability();
 
 
         if (IsPlayerTurn)
@@ -156,8 +160,8 @@ public class GameManagerScr : MonoBehaviour
 
             foreach (var card in PlayerFieldCards)
             {
-                card.SelfCard.ChangeAttackState(true);
-                card.HighlightCard();
+                card.Card.CanAttack =true;
+                card.Info.HighlightCard(true);
             }
             while (TurnTime-- > 0)
             {
@@ -170,7 +174,7 @@ public class GameManagerScr : MonoBehaviour
         {
 
             foreach (var card in EnemyFieldCards)
-                card.SelfCard.ChangeAttackState(true);
+                card.Card.CanAttack=true;
                   
             
                 StartCoroutine(EnemyTurn(EnemyHandCards));
@@ -178,7 +182,7 @@ public class GameManagerScr : MonoBehaviour
         }
     }
 
-    IEnumerator EnemyTurn(List<CardInfoScr> cards)
+    IEnumerator EnemyTurn(List<CardControllerScr> cards)
     {
 
         yield return new WaitForSeconds(1);
@@ -193,26 +197,25 @@ public class GameManagerScr : MonoBehaviour
                 EnemyHandCards.Count == 0)
                 break;
 
-            List<CardInfoScr> cardsList = cards.FindAll(x => EnemyMana >= x.SelfCard.Manacost);
+            List<CardControllerScr> cardsList = cards.FindAll(x => EnemyMana >= x.Card.Manacost);
 
             if (cardsList.Count == 0)
                 break;
 
             cardsList[0].GetComponent<CardMovementScr>().MoveToFields(EnemyField);
-            ReduceMana(false, cardsList[0].SelfCard.Manacost);
+            ReduceMana(false, cardsList[0].Card.Manacost);
 
             yield return new WaitForSeconds(.51f);
 
-            cardsList[0].ShowCardInfo(cardsList[0].SelfCard, false);
+            cardsList[0].Info.ShowCardInfo();
             cardsList[0].transform.SetParent(EnemyField);
 
-            EnemyFieldCards.Add(cardsList[0]);
-            EnemyHandCards.Remove(cardsList[0]);
+            cardsList[0].OnCast();
         }
 
         yield return new WaitForSeconds(1);
 
-        foreach (var activeCard in EnemyFieldCards.FindAll(x => x.SelfCard.CanAttack))
+        foreach (var activeCard in EnemyFieldCards.FindAll(x => x.Card.CanAttack))
         {
             if (Random.Range(0, 2) == 0 &&
                 PlayerFieldCards.Count > 0)
@@ -220,10 +223,10 @@ public class GameManagerScr : MonoBehaviour
 
                 var enemy = PlayerFieldCards[Random.Range(0, PlayerFieldCards.Count)];
 
-                Debug.Log(activeCard.SelfCard.Name + "(" + activeCard.SelfCard.Attack + ";" + activeCard.SelfCard.Defence + ")" + "--->" +
-                    enemy.SelfCard.Name + "(" + enemy.SelfCard.Attack + ";" + enemy.SelfCard.Defence + ")");
+                Debug.Log(activeCard.Card.Name + "(" + activeCard.Card.Attack + ";" + activeCard.Card.Defence + ")" + "--->" +
+                    enemy.Card.Name + "(" + enemy.Card.Attack + ";" + enemy.Card.Defence + ")");
                
-                activeCard.SelfCard.ChangeAttackState(false);
+                activeCard.Card.CanAttack =false ;
 
                 activeCard.GetComponent<CardMovementScr>().MoveToTarget(enemy.transform);
                 yield return new WaitForSeconds(.75f);
@@ -232,8 +235,8 @@ public class GameManagerScr : MonoBehaviour
             }
             else
             {
-                Debug.Log(activeCard.SelfCard.Name + "(" + activeCard.SelfCard.Attack + ") Attacked hero");
-                activeCard.SelfCard.ChangeAttackState(false);
+                Debug.Log(activeCard.Card.Name + "(" + activeCard.Card.Attack + ") Attacked hero");
+                activeCard.Card.CanAttack=false;
 
                 activeCard.GetComponent<CardMovementScr>().MoveToTarget(PlayerHero.transform);
                 yield return new WaitForSeconds(.75f);
@@ -271,38 +274,18 @@ public class GameManagerScr : MonoBehaviour
         GiveCardToHand(CurrentGame.PlayerDeck, PlayerHand);
     }
 
-    public void CradsFight(CardInfoScr playerCard, CardInfoScr enemyCard)
+    public void CradsFight(CardControllerScr attacker, CardControllerScr defender)
     {
-        playerCard.SelfCard.GetDamage(enemyCard.SelfCard.Attack);
-        enemyCard.SelfCard.GetDamage(playerCard.SelfCard.Attack);
-
-        if (!playerCard.SelfCard.IsAlive)
-            DestroyCard(playerCard);
-        else
-        {
-            playerCard.RefreshData();
-        }
-
-        if (!enemyCard.SelfCard.IsAlive)
-            DestroyCard(enemyCard);
-        else
-        {
-            enemyCard.RefreshData();
-        }
+        attacker.Card.GetDamage(defender.Card.Attack);
+        attacker.OnDamageDeal();
+        defender.OnTakeDamage(attacker);
+        defender.Card.GetDamage(attacker.Card.Attack);
+        attacker.OnTakeDamage();
+        attacker.CheckForalive();
+        defender.CheckForalive();
     }
 
-    void DestroyCard(CardInfoScr card)
-    {
-        card.GetComponent<CardMovementScr>().OnEndDrag(null);
-
-        if (EnemyFieldCards.Exists(x => x == card))
-            EnemyFieldCards.Remove(card);
-
-        if (PlayerFieldCards.Exists(x => x == card))
-            PlayerFieldCards.Remove(card);
-
-        Destroy(card.gameObject);
-    }
+   
 
     void ShowMana()
     {
@@ -327,14 +310,14 @@ public class GameManagerScr : MonoBehaviour
         ShowMana();
     }
 
-    public void DamageHero(CardInfoScr card, bool isEnemyAttacked)
+    public void DamageHero(CardControllerScr card, bool isEnemyAttacked)
     {
         if (isEnemyAttacked)
-            EnemyHP = Mathf.Clamp(EnemyHP - card.SelfCard.Attack, 0, int.MaxValue);
+            EnemyHP = Mathf.Clamp(EnemyHP - card.Card.Attack, 0, int.MaxValue);
         else
-            PlayerHP = Mathf.Clamp(PlayerHP - card.SelfCard.Attack, 0, int.MaxValue);
+            PlayerHP = Mathf.Clamp(PlayerHP - card.Card.Attack, 0, int.MaxValue);
         ShowHP();
-        card.DeHighlightCard();
+        card.OnDamageDeal();
         CheckForResult();
     }
 
@@ -353,18 +336,18 @@ public class GameManagerScr : MonoBehaviour
 
     }
 
-    public void CheckCardsForAvailability()
+    public void CheckCardsForManaAvailability()
     {
         foreach (var card in PlayerHandCards)
 
-            card.CheckForAvailability(PlayerMana);
+            card.Info.HighlightManaAvailability(PlayerMana);
 
     }
 
     public void HighlightTargets (bool highlight)
         {
         foreach (var card in EnemyFieldCards)
-            card.HighlightAsTarget(highlight);
+            card.Info.HighlightAsTarget(highlight);
 
         EnemyHero.HighlightAsTarget(highlight);
         }

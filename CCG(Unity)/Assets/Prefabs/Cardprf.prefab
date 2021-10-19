@@ -168,8 +168,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -3.6054, y: 93}
-  m_SizeDelta: {x: 224.5102, y: 47.9947}
+  m_AnchoredPosition: {x: -3.6054, y: 96.4762}
+  m_SizeDelta: {x: 224.5102, y: 41.0423}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &1947129057957257217
 CanvasRenderer:
@@ -201,8 +201,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: Name
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: dc36b3fdc14f47ebb36fd484a67e268a, type: 2}
-  m_sharedMaterial: {fileID: 2140032, guid: dc36b3fdc14f47ebb36fd484a67e268a, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 5302535af1044152a457ed104f1f4b91, type: 2}
+  m_sharedMaterial: {fileID: 2164040, guid: 5302535af1044152a457ed104f1f4b91, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -226,13 +226,13 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 30
-  m_fontSizeBase: 30
+  m_fontSize: 18
+  m_fontSizeBase: 18
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
   m_fontSizeMax: 72
-  m_fontStyle: 1
+  m_fontStyle: 17
   m_HorizontalAlignment: 2
   m_VerticalAlignment: 512
   m_textAlignment: 65535
@@ -359,10 +359,11 @@ GameObject:
   - component: {fileID: 1947129058359134539}
   - component: {fileID: 1947129058359134532}
   - component: {fileID: 1947129058359134533}
-  - component: {fileID: 1947129058359134538}
   - component: {fileID: 1947129058359134535}
   - component: {fileID: -2831297808193556928}
   - component: {fileID: 7183224899314257812}
+  - component: {fileID: 7747158811796133271}
+  - component: {fileID: 3288284684958312294}
   m_Layer: 5
   m_Name: Cardprf
   m_TagString: Untagged
@@ -429,22 +430,6 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!114 &1947129058359134538
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1947129058359134536}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9babc152e6ef6ae449ead009982dd9df, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  DefaultParent: {fileID: 0}
-  DefaultTempCardParent: {fileID: 0}
-  GameManager: {fileID: 0}
-  IsDraggable: 0
 --- !u!225 &1947129058359134535
 CanvasGroup:
   m_ObjectHideFlags: 0
@@ -469,6 +454,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5606ff3167bcf6e47ab02614b510c782, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  CC: {fileID: 7747158811796133271}
   Logo: {fileID: 1947129058269590968}
   Name: {fileID: 1947129057957257222}
   Attack: {fileID: 4469067348696267033}
@@ -476,7 +462,6 @@ MonoBehaviour:
   Manacost: {fileID: 1107661957961150409}
   HideObj: {fileID: 7265100473714773274}
   HighlitedObj: {fileID: 7360549965135849709}
-  IsPlayer: 0
   NormalCol: {r: 0.42352942, g: 0.3019608, b: 0.3019608, a: 1}
   TargetCol: {r: 0.8584906, g: 0.2705055, b: 0.2705055, a: 1}
 --- !u!114 &7183224899314257812
@@ -491,6 +476,38 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5eb4b4045cea8a4419903fb373bf8fb1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &7747158811796133271
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1947129058359134536}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b2eddb0b03ca2e949ad626a32a91a0d4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  IsPlayerCard: 0
+  Info: {fileID: -2831297808193556928}
+  Movement: {fileID: 3288284684958312294}
+  Ability: {fileID: 0}
+--- !u!114 &3288284684958312294
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1947129058359134536}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9babc152e6ef6ae449ead009982dd9df, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  CC: {fileID: 7747158811796133271}
+  DefaultParent: {fileID: 0}
+  DefaultTempCardParent: {fileID: 0}
+  IsDraggable: 0
 --- !u!1 &2649302088950452810
 GameObject:
   m_ObjectHideFlags: 0

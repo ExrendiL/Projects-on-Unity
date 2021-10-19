@@ -14,21 +14,20 @@ public class AttackedHero : MonoBehaviour, IDropHandler
     }
 
     public HeroType Type;
-    public GameManagerScr GameManager;
     public Color NormalCol, TargetCol;
 
     public void OnDrop(PointerEventData eventData)
     {
-        if (!GameManager.IsPlayerTurn)
+        if (!GameManagerScr.Instance.IsPlayerTurn)
             return;
-        CardInfoScr card = eventData.pointerDrag.GetComponent<CardInfoScr>();
+        CardControllerScr card = eventData.pointerDrag.GetComponent<CardControllerScr>();
 
         if (card &&
-            card.SelfCard.CanAttack &&
+            card.Card.CanAttack &&
             Type == HeroType.ENEMY)
         {
-            card.SelfCard.CanAttack = false;
-            GameManager.DamageHero(card, true);
+     
+            GameManagerScr.Instance.DamageHero(card, true);
         }
     }
 

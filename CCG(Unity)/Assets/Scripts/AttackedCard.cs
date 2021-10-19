@@ -8,20 +8,18 @@ public class AttackedCard : MonoBehaviour, IDropHandler
     public void OnDrop(PointerEventData eventData)
     {
 
-        if (!GetComponent<CardMovementScr>().GameManager.IsPlayerTurn)
+        if (!GameManagerScr.Instance.IsPlayerTurn)
             return;
 
-        CardInfoScr card = eventData.pointerDrag.GetComponent<CardInfoScr>();
+        CardControllerScr attacker = eventData.pointerDrag.GetComponent<CardControllerScr>(),
+            defender = GetComponent<CardControllerScr>();
 
-        if (card && card.SelfCard.CanAttack &&
-            transform.parent == GetComponent<CardMovementScr>().GameManager.EnemyField)
+        if (attacker && attacker.Card.CanAttack &&
+            defender.Card.IsPlaced)
         {
-            card.SelfCard.ChangeAttackState(false);
+          
 
-            if (card.IsPlayer)
-                card.DeHighlightCard();
-
-            GetComponent<CardMovementScr>().GameManager.CradsFight(card, GetComponent<CardInfoScr>());
+           GameManagerScr.Instance.CradsFight(attacker, defender);
         }
 
     }
