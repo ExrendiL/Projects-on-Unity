@@ -1,0 +1,2 @@
+Folder "htdocs" has the php docs for database using
+This project using MAMP service 
