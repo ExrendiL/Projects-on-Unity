@@ -19,7 +19,10 @@ public class EnemyAttack : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            agent.SetDestination(other.transform.parent.gameObject.transform.position);
+            if (agent.enabled)
+            {
+                agent.SetDestination(other.transform.parent.gameObject.transform.position);
+            }
         }
         if (other.CompareTag("Attack"))
         {
@@ -35,8 +38,12 @@ public class EnemyAttack : MonoBehaviour
     {
         while (true)
         {
-            other.transform.parent.GetComponent<PlayerHealth>().takeDamage(damage);
-            yield return new WaitForSeconds(0.5f);
+            if (agent.enabled)
+            {
+                other.transform.parent.GetComponent<PlayerHealth>().takeDamage(damage);
+            }
+                yield return new WaitForSeconds(0.5f);
+            
         }
          
     }
@@ -55,10 +62,5 @@ public class EnemyAttack : MonoBehaviour
             anim.SetBool("isAttack", false);
         }
     }
-
-
-    //private void Update()
-    //{
-        
-    //}
+ 
 }

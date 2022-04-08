@@ -25,7 +25,10 @@ public class MoveAgents : MonoBehaviour
             return;
         }
         nowPlace = moveTo;
-        agent.SetDestination(moveTo.position);
+        if (agent.enabled)
+        {
+            agent.SetDestination(moveTo.position);
+        }
     }
 
     private void OnTriggerEnter(Collider other)
@@ -36,9 +39,4 @@ public class MoveAgents : MonoBehaviour
         }
         
     }
-
-    //private void Update()
-    //{
-        
-    //}
 }
