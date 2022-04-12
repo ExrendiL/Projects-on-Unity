@@ -8,11 +8,13 @@ public class PlayerAttack : MonoBehaviour
     private bool attack;
     private Collider mummy;
     private Animator anim;
+    private AudioSource audio;
 
-     
+
     private void Start()
     {
         anim = transform.parent.GetComponent<Animator>();
+        audio = GetComponent<AudioSource>();
     }
 
     private void Update()
@@ -21,6 +23,7 @@ public class PlayerAttack : MonoBehaviour
         {
             mummy.GetComponent<EnemyHealth>().takeDamage(damage);
             anim.SetTrigger("Attack");
+            audio.Play();
         }
     }
     private void OnTriggerStay(Collider other)

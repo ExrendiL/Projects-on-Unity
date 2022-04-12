@@ -28,15 +28,4 @@ public class HealPlayer : MonoBehaviour
             }
         }
     }
-
-    //private void Start()
-    //{
-
-    //}
-
-
-    //private void Update()
-    //{
-
-    //}
 }

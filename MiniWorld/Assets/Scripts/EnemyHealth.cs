@@ -12,10 +12,12 @@ public class EnemyHealth : MonoBehaviour
     public GameObject[] mummyParts;
     public Color materColor;
     public bool canHeal = true;
+    private AudioSource audio;
 
     private void Start()
     {
         rb = GetComponent<Rigidbody>();
+        audio = GetComponent<AudioSource>();
     }
 
     public void takeDamage(float damage)
@@ -26,7 +28,7 @@ public class EnemyHealth : MonoBehaviour
         if (health <= 0 && !mummy_death)
         {
             mummy_death = true;
-
+            audio.Play();
             setNewColor(materColor);
 
             Destroy(healthBar);
