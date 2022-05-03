@@ -1,0 +1,3 @@
+SimpleScene - vr target image technology, when you hover the camera appears earth and moon, as well as their rotation.
+Scene 1 - vr technology, when you click on the screen, the tower is built and retains its location.
+Scene2 - vr technology, where a canvas with text appears when hovering over a scanned object.
