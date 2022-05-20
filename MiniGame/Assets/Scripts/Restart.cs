@@ -1,0 +1,11 @@
+using UnityEngine;
+using UnityEngine.SceneManagement;
+
+public class Restart : MonoBehaviour
+{
+    public void RestartGame()
+    {
+        SceneManager.LoadScene(0);
+        gameObject.SetActive(false);
+    }
+}
